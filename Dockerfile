@@ -1,14 +1,14 @@
-FROM node:alpine
+FROM node:14-alpine
 
-WORKDIR /usr/app
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
 
-COPY ./package.json ./
-RUN npm install
-COPY ./ ./
+WORKDIR /usr/src/app
+
+COPY ./package*.json ./
+RUN npm ci
+
+COPY . .
 
 EXPOSE 3000
-
 CMD ["npm", "start"]
-
-# docker build -t hitoshi.asano/node-web-app:latest . 
-# docker run -p 8080:8080 hitoshi.asano/node-web-app
